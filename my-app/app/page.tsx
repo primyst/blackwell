@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { Scale, Shield, Globe, BookOpen, ChevronRight, Menu, X, Phone, Mail, MapPin, Star, ArrowUpRight } from "lucide-react";
 
