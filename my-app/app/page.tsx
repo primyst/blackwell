@@ -43,10 +43,10 @@ export default function LawFirm() {
     "Contact": useRef(null),
   };
 
-  const scrollTo = (section) => {
+  const scrollTo = (section: string) => {
     sectionRefs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMenuOpen(false);
-  };
+};
 
   return (
     <div className="min-h-screen bg-[#f5f0e8] text-[#1a1a1a]">
