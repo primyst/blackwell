@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Scale, Shield, Globe, BookOpen, ChevronRight, Menu, X, Phone, Mail, MapPin, Star, ArrowUpRight } from "lucide-react";
 
 const navLinks = ["Practice Areas", "About", "Attorneys", "Testimonials", "Contact"];
@@ -13,9 +13,9 @@ const practices = [
 ];
 
 const attorneys = [
-  { name: "Adrienne Blackwell", role: "Senior Partner", tag: "20+ yrs", initials: "AB" },
-  { name: "Marcus O. Hale", role: "Managing Partner", tag: "Litigation", initials: "MH" },
-  { name: "Sophia Renner", role: "Associate Partner", tag: "Corporate", initials: "SR" },
+  { name: "Adrienne Blackwell", role: "Senior Partner", tag: "20+ yrs", img: "https://i.pravatar.cc/400?img=47" },
+  { name: "Marcus O. Hale", role: "Managing Partner", tag: "Litigation", img: "https://i.pravatar.cc/400?img=11" },
+  { name: "Sophia Renner", role: "Associate Partner", tag: "Corporate", img: "https://i.pravatar.cc/400?img=56" },
 ];
 
 const testimonials = [
@@ -35,6 +35,19 @@ export default function LawFirm() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
+  const sectionRefs = {
+    "Practice Areas": useRef(null),
+    "About": useRef(null),
+    "Attorneys": useRef(null),
+    "Testimonials": useRef(null),
+    "Contact": useRef(null),
+  };
+
+  const scrollTo = (section) => {
+    sectionRefs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f0e8] text-[#1a1a1a]">
       <style>{`
@@ -52,9 +65,11 @@ export default function LawFirm() {
           </div>
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
-              <a key={l} href="#" className="text-[11px] tracking-widest text-[#5a4f3f] hover:text-[#1a1a1a] transition-colors uppercase font-medium">{l}</a>
+              <button key={l} onClick={() => scrollTo(l)} className="text-[11px] tracking-widest text-[#5a4f3f] hover:text-[#1a1a1a] transition-colors uppercase font-medium cursor-pointer bg-transparent border-none">
+                {l}
+              </button>
             ))}
-            <button className="bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-5 py-2.5 hover:bg-[#8a6a3a] transition-colors duration-200">
+            <button onClick={() => scrollTo("Contact")} className="bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-5 py-2.5 hover:bg-[#8a6a3a] transition-colors duration-200 cursor-pointer">
               Free Consultation
             </button>
           </div>
@@ -65,9 +80,11 @@ export default function LawFirm() {
         {menuOpen && (
           <div className="md:hidden bg-[#f5f0e8] border-t border-[#d4c9b0] px-6 py-5 flex flex-col gap-5">
             {navLinks.map((l) => (
-              <a key={l} href="#" className="text-[11px] tracking-widest text-[#5a4f3f] uppercase font-medium">{l}</a>
+              <button key={l} onClick={() => scrollTo(l)} className="text-[11px] tracking-widest text-[#5a4f3f] uppercase font-medium text-left bg-transparent border-none cursor-pointer">
+                {l}
+              </button>
             ))}
-            <button className="bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-5 py-3 w-full">
+            <button onClick={() => scrollTo("Contact")} className="bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-5 py-3 w-full cursor-pointer">
               Free Consultation
             </button>
           </div>
@@ -92,16 +109,15 @@ export default function LawFirm() {
               Blackwell Hale is a premier international law firm delivering strategic legal counsel to corporations, governments, and high-net-worth individuals across four continents.
             </p>
             <div className="flex flex-wrap gap-4">
-              <button className="sans bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-8 py-4 hover:bg-[#8a6a3a] transition-colors duration-200 flex items-center gap-2">
+              <button onClick={() => scrollTo("Contact")} className="sans bg-[#1a1a1a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium px-8 py-4 hover:bg-[#8a6a3a] transition-colors duration-200 flex items-center gap-2 cursor-pointer">
                 Schedule Consultation <ArrowUpRight size={14} />
               </button>
-              <button className="sans border border-[#1a1a1a] text-[#1a1a1a] text-[11px] tracking-widest uppercase font-medium px-8 py-4 hover:bg-[#1a1a1a] hover:text-[#f5f0e8] transition-colors duration-200">
+              <button onClick={() => scrollTo("Practice Areas")} className="sans border border-[#1a1a1a] text-[#1a1a1a] text-[11px] tracking-widest uppercase font-medium px-8 py-4 hover:bg-[#1a1a1a] hover:text-[#f5f0e8] transition-colors duration-200 cursor-pointer">
                 Our Practice Areas
               </button>
             </div>
           </div>
 
-          {/* Hero right — decorative card */}
           <div className="hidden lg:block relative">
             <div className="bg-[#1a1a1a] p-10 relative">
               <div className="absolute top-4 right-4 w-16 h-16 border border-[#8a6a3a]/30" />
@@ -110,9 +126,7 @@ export default function LawFirm() {
                 We don't just represent clients. We protect what they've built.
               </p>
               <div className="flex items-center gap-4 pt-6 border-t border-[#2a2a2a]">
-                <div className="w-10 h-10 bg-[#8a6a3a] flex items-center justify-center">
-                  <Scale size={16} className="text-white" strokeWidth={1.5} />
-                </div>
+                <img src="https://i.pravatar.cc/80?img=47" alt="Adrienne Blackwell" className="w-10 h-10 object-cover" />
                 <div>
                   <p className="sans text-[#f5f0e8] text-xs font-medium">Adrienne Blackwell</p>
                   <p className="sans text-[#5a5a5a] text-[10px] tracking-widest uppercase">Founding Partner</p>
@@ -125,7 +139,7 @@ export default function LawFirm() {
       </section>
 
       {/* Stats */}
-      <section className="sans bg-[#1a1a1a] px-6 py-14">
+      <section ref={sectionRefs["About"]} className="sans bg-[#1a1a1a] px-6 py-14 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
@@ -137,7 +151,7 @@ export default function LawFirm() {
       </section>
 
       {/* Practice Areas */}
-      <section className="px-6 py-24">
+      <section ref={sectionRefs["Practice Areas"]} className="px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -166,7 +180,7 @@ export default function LawFirm() {
       </section>
 
       {/* Attorneys */}
-      <section className="sans bg-[#ede8dc] px-6 py-24">
+      <section ref={sectionRefs["Attorneys"]} className="sans bg-[#ede8dc] px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -176,14 +190,11 @@ export default function LawFirm() {
             <div className="h-px bg-[#d4c9b0] flex-1 mb-4 hidden md:block" />
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {attorneys.map(({ name, role, tag, initials }) => (
+            {attorneys.map(({ name, role, tag, img }) => (
               <div key={name} className="group cursor-pointer">
-                <div className="bg-[#d4c9b0] aspect-[3/4] mb-5 relative overflow-hidden flex items-center justify-center">
-                  {/* Placeholder avatar */}
-                  <div className="w-24 h-24 rounded-full bg-[#b8ad9a] flex items-center justify-center">
-                    <span className="serif text-3xl font-semibold text-[#7a6d5e]">{initials}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-[#1a1a1a] opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
+                <div className="aspect-[3/4] mb-5 relative overflow-hidden">
+                  <img src={img} alt={name} className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500" />
+                  <div className="absolute inset-0 bg-[#1a1a1a] opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                   <div className="absolute bottom-5 left-5">
                     <span className="sans text-[9px] tracking-widest bg-[#8a6a3a] text-white px-2.5 py-1 uppercase">{tag}</span>
                   </div>
@@ -197,7 +208,7 @@ export default function LawFirm() {
       </section>
 
       {/* Testimonials */}
-      <section className="px-6 py-24">
+      <section ref={sectionRefs["Testimonials"]} className="px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -219,21 +230,16 @@ export default function LawFirm() {
               </p>
               <div className="flex gap-3">
                 {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveTestimonial(i)}
-                    className={`h-0.5 transition-all duration-300 ${i === activeTestimonial ? "w-12 bg-[#8a6a3a]" : "w-6 bg-[#d4c9b0] hover:bg-[#b8a898]"}`}
+                  <button key={i} onClick={() => setActiveTestimonial(i)}
+                    className={`h-0.5 transition-all duration-300 cursor-pointer ${i === activeTestimonial ? "w-12 bg-[#8a6a3a]" : "w-6 bg-[#d4c9b0] hover:bg-[#b8a898]"}`}
                   />
                 ))}
               </div>
             </div>
-            {/* Side cards */}
             <div className="hidden lg:flex flex-col gap-4">
               {testimonials.map((t, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`text-left p-5 border transition-all duration-200 ${i === activeTestimonial ? "border-[#8a6a3a] bg-[#1a1a1a]" : "border-[#d4c9b0] bg-transparent hover:border-[#b8a898]"}`}
+                <button key={i} onClick={() => setActiveTestimonial(i)}
+                  className={`text-left p-5 border transition-all duration-200 cursor-pointer ${i === activeTestimonial ? "border-[#8a6a3a] bg-[#1a1a1a]" : "border-[#d4c9b0] bg-transparent hover:border-[#b8a898]"}`}
                 >
                   <p className={`sans text-[10px] tracking-widest uppercase font-medium ${i === activeTestimonial ? "text-[#8a6a3a]" : "text-[#8a7d6b]"}`}>{t.name}</p>
                 </button>
@@ -244,7 +250,7 @@ export default function LawFirm() {
       </section>
 
       {/* Contact */}
-      <section className="sans bg-[#1a1a1a] px-6 py-24">
+      <section ref={sectionRefs["Contact"]} className="sans bg-[#1a1a1a] px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
           <div>
             <p className="text-[10px] tracking-[0.3em] text-[#8a6a3a] uppercase font-medium mb-4">Get in Touch</p>
@@ -274,7 +280,7 @@ export default function LawFirm() {
             <input className="bg-[#242424] border border-[#333] text-[#f5f0e8] text-xs px-4 py-4 placeholder-[#4a4a4a] focus:outline-none focus:border-[#8a6a3a] transition-colors" placeholder="Email Address" />
             <input className="bg-[#242424] border border-[#333] text-[#f5f0e8] text-xs px-4 py-4 placeholder-[#4a4a4a] focus:outline-none focus:border-[#8a6a3a] transition-colors" placeholder="Nature of Matter" />
             <textarea rows={4} className="bg-[#242424] border border-[#333] text-[#f5f0e8] text-xs px-4 py-4 placeholder-[#4a4a4a] focus:outline-none focus:border-[#8a6a3a] transition-colors resize-none" placeholder="Brief description of your case..." />
-            <button className="bg-[#8a6a3a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium py-4 hover:bg-[#c9a96e] transition-colors duration-200 flex items-center justify-center gap-2">
+            <button className="bg-[#8a6a3a] text-[#f5f0e8] text-[11px] tracking-widest uppercase font-medium py-4 hover:bg-[#c9a96e] transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer">
               Request Consultation <ArrowUpRight size={14} />
             </button>
           </div>
@@ -286,11 +292,10 @@ export default function LawFirm() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="serif text-[#3a3430] text-sm">BLACKWELL HALE · Attorneys & Counselors at Law</p>
           <p className="text-[10px] text-[#333] tracking-widest uppercase">
-            Demo by <span className="text-[#8a6a3a]">Primyst</span>
+            Demo by <span className="text-[#8a6a3a]">Primyst</span> · primyst solutions
           </p>
         </div>
       </footer>
-
     </div>
   );
-                  }
+      }
