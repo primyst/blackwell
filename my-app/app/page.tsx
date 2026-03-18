@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useRef } from "react";
+import { useState, useRef, RefObject } from "react";
 import { Scale, Shield, Globe, BookOpen, ChevronRight, Menu, X, Phone, Mail, MapPin, Star, ArrowUpRight } from "lucide-react";
 
-const navLinks = ["Practice Areas", "About", "Attorneys", "Testimonials", "Contact"];
+const navLinks = ["Practice Areas", "About", "Attorneys", "Testimonials", "Contact"] as const;
+type NavLink = typeof navLinks[number];
 
 const practices = [
   { icon: Scale, title: "Litigation & Dispute Resolution", desc: "Aggressive courtroom representation with a record of landmark victories across civil and commercial disputes." },
@@ -35,18 +36,24 @@ export default function LawFirm() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const sectionRefs = {
-    "Practice Areas": useRef(null),
-    "About": useRef(null),
-    "Attorneys": useRef(null),
-    "Testimonials": useRef(null),
-    "Contact": useRef(null),
+  const practiceRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const attorneysRef = useRef<HTMLElement>(null);
+  const testimonialsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+
+  const sectionRefs: Record<NavLink, RefObject<HTMLElement | null>> = {
+    "Practice Areas": practiceRef,
+    "About": aboutRef,
+    "Attorneys": attorneysRef,
+    "Testimonials": testimonialsRef,
+    "Contact": contactRef,
   };
 
-  const scrollTo = (section: keyof typeof sectionRefs) => {
-    sectionRefs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollTo = (section: NavLink) => {
+    sectionRefs[section].current?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMenuOpen(false);
-};
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f0e8] text-[#1a1a1a]">
@@ -139,7 +146,7 @@ export default function LawFirm() {
       </section>
 
       {/* Stats */}
-      <section ref={sectionRefs["About"]} className="sans bg-[#1a1a1a] px-6 py-14 scroll-mt-20">
+      <section ref={aboutRef} className="sans bg-[#1a1a1a] px-6 py-14 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
@@ -151,7 +158,7 @@ export default function LawFirm() {
       </section>
 
       {/* Practice Areas */}
-      <section ref={sectionRefs["Practice Areas"]} className="px-6 py-24 scroll-mt-20">
+      <section ref={practiceRef} className="px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -180,7 +187,7 @@ export default function LawFirm() {
       </section>
 
       {/* Attorneys */}
-      <section ref={sectionRefs["Attorneys"]} className="sans bg-[#ede8dc] px-6 py-24 scroll-mt-20">
+      <section ref={attorneysRef} className="sans bg-[#ede8dc] px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -208,7 +215,7 @@ export default function LawFirm() {
       </section>
 
       {/* Testimonials */}
-      <section ref={sectionRefs["Testimonials"]} className="px-6 py-24 scroll-mt-20">
+      <section ref={testimonialsRef} className="px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end gap-8 mb-14">
             <div>
@@ -250,7 +257,7 @@ export default function LawFirm() {
       </section>
 
       {/* Contact */}
-      <section ref={sectionRefs["Contact"]} className="sans bg-[#1a1a1a] px-6 py-24 scroll-mt-20">
+      <section ref={contactRef} className="sans bg-[#1a1a1a] px-6 py-24 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
           <div>
             <p className="text-[10px] tracking-[0.3em] text-[#8a6a3a] uppercase font-medium mb-4">Get in Touch</p>
@@ -292,10 +299,10 @@ export default function LawFirm() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="serif text-[#3a3430] text-sm">BLACKWELL HALE · Attorneys & Counselors at Law</p>
           <p className="text-[10px] text-[#333] tracking-widest uppercase">
-            Demo by <span className="text-[#8a6a3a]">Primyst</span> · primyst solutions
+            Demo by <span className="text-[#8a6a3a]">Primyst</span>
           </p>
         </div>
       </footer>
     </div>
   );
-      }
+}
