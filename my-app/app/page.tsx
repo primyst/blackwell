@@ -197,19 +197,24 @@ export default function LawFirm() {
             <div className="h-px bg-[#d4c9b0] flex-1 mb-4 hidden md:block" />
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {attorneys.map(({ name, role, tag, img }) => (
-              <div key={name} className="group cursor-pointer">
-                <div className="aspect-[3/4] mb-5 relative overflow-hidden">
-                  <img src={img} alt={name} className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500" />
-                  <div className="absolute inset-0 bg-[#1a1a1a] opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  <div className="absolute bottom-5 left-5">
-                    <span className="sans text-[9px] tracking-widest bg-[#8a6a3a] text-white px-2.5 py-1 uppercase">{tag}</span>
-                  </div>
-                </div>
-                <h3 className="serif text-2xl font-semibold text-[#1a1a1a] mb-1">{name}</h3>
-                <p className="text-[10px] tracking-widest text-[#8a7d6b] uppercase">{role}</p>
-              </div>
-            ))}
+            {attorneys.map(({ name, role, tag, initials }) => (
+  <div key={name} className="group cursor-pointer">
+    <div className="aspect-[3/4] mb-5 relative overflow-hidden">
+      <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center relative">
+        <div className="absolute inset-0 border border-[#8a6a3a]/20" />
+        <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#8a6a3a]/40" />
+        <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-[#8a6a3a]/40" />
+        <span className="serif text-6xl font-normal text-[#c9a96e]/60 select-none">{initials}</span>
+      </div>
+      <div className="absolute inset-0 bg-[#8a6a3a] opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+      <div className="absolute bottom-5 left-5">
+        <span className="sans text-[9px] tracking-widest bg-[#8a6a3a] text-white px-2.5 py-1 uppercase">{tag}</span>
+      </div>
+    </div>
+    <h3 className="serif text-2xl font-semibold text-[#1a1a1a] mb-1">{name}</h3>
+    <p className="text-[10px] tracking-widest text-[#8a7d6b] uppercase">{role}</p>
+  </div>
+))}
           </div>
         </div>
       </section>
