@@ -14,9 +14,9 @@ const practices = [
 ];
 
 const attorneys = [
-  { name: "Adrienne Blackwell", role: "Senior Partner", tag: "20+ yrs", img: "https://i.pravatar.cc/400?img=47" },
-  { name: "Marcus O. Hale", role: "Managing Partner", tag: "Litigation", img: "https://i.pravatar.cc/400?img=11" },
-  { name: "Sophia Renner", role: "Associate Partner", tag: "Corporate", img: "https://i.pravatar.cc/400?img=56" },
+  { name: "Adrienne Blackwell", role: "Senior Partner", tag: "20+ yrs", initials: "AB" },
+  { name: "Marcus O. Hale", role: "Managing Partner", tag: "Litigation", initials: "MH" },
+  { name: "Sophia Renner", role: "Associate Partner", tag: "Corporate", initials: "SR" },
 ];
 
 const testimonials = [
@@ -133,7 +133,9 @@ export default function LawFirm() {
                 We don't just represent clients. We protect what they've built.
               </p>
               <div className="flex items-center gap-4 pt-6 border-t border-[#2a2a2a]">
-                <img src="https://i.pravatar.cc/80?img=47" alt="Adrienne Blackwell" className="w-10 h-10 object-cover" />
+                <div className="w-10 h-10 bg-[#2a2a2a] border border-[#8a6a3a]/30 flex items-center justify-center shrink-0">
+                  <span className="serif text-sm text-[#c9a96e]">AB</span>
+                </div>
                 <div>
                   <p className="sans text-[#f5f0e8] text-xs font-medium">Adrienne Blackwell</p>
                   <p className="sans text-[#5a5a5a] text-[10px] tracking-widest uppercase">Founding Partner</p>
@@ -198,23 +200,23 @@ export default function LawFirm() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {attorneys.map(({ name, role, tag, initials }) => (
-  <div key={name} className="group cursor-pointer">
-    <div className="aspect-[3/4] mb-5 relative overflow-hidden">
-      <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center relative">
-        <div className="absolute inset-0 border border-[#8a6a3a]/20" />
-        <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#8a6a3a]/40" />
-        <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-[#8a6a3a]/40" />
-        <span className="serif text-6xl font-normal text-[#c9a96e]/60 select-none">{initials}</span>
-      </div>
-      <div className="absolute inset-0 bg-[#8a6a3a] opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-      <div className="absolute bottom-5 left-5">
-        <span className="sans text-[9px] tracking-widest bg-[#8a6a3a] text-white px-2.5 py-1 uppercase">{tag}</span>
-      </div>
-    </div>
-    <h3 className="serif text-2xl font-semibold text-[#1a1a1a] mb-1">{name}</h3>
-    <p className="text-[10px] tracking-widest text-[#8a7d6b] uppercase">{role}</p>
-  </div>
-))}
+              <div key={name} className="group cursor-pointer">
+                <div className="aspect-[3/4] mb-5 relative overflow-hidden">
+                  <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center relative">
+                    <div className="absolute inset-0 border border-[#8a6a3a]/20" />
+                    <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#8a6a3a]/40" />
+                    <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-[#8a6a3a]/40" />
+                    <span className="serif text-6xl font-normal text-[#c9a96e]/60 select-none">{initials}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-[#8a6a3a] opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                  <div className="absolute bottom-5 left-5">
+                    <span className="sans text-[9px] tracking-widest bg-[#8a6a3a] text-white px-2.5 py-1 uppercase">{tag}</span>
+                  </div>
+                </div>
+                <h3 className="serif text-2xl font-semibold text-[#1a1a1a] mb-1">{name}</h3>
+                <p className="text-[10px] tracking-widest text-[#8a7d6b] uppercase">{role}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -304,7 +306,7 @@ export default function LawFirm() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="serif text-[#3a3430] text-sm">BLACKWELL HALE · Attorneys & Counselors at Law</p>
           <p className="text-[10px] text-[#333] tracking-widest uppercase">
-            Demo by <span className="text-[#8a6a3a]">Primyst</span>
+            Demo by <span className="text-[#8a6a3a]">Primyst</span> · primyst.com
           </p>
         </div>
       </footer>
