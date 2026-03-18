@@ -43,7 +43,7 @@ export default function LawFirm() {
     "Contact": useRef(null),
   };
 
-  const scrollTo = (section: string) => {
+  const scrollTo = (section: keyof typeof sectionRefs) => {
     sectionRefs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMenuOpen(false);
 };
