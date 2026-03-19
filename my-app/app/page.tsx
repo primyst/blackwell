@@ -32,6 +32,15 @@ const stats = [
   { value: "12", label: "Countries Served" },
 ];
 
+const trustBadges = [
+  { name: "International Bar Association", abbr: "IBA" },
+  { name: "American Bar Association", abbr: "ABA" },
+  { name: "Chambers & Partners", abbr: "C&P" },
+  { name: "Legal 500", abbr: "L500" },
+  { name: "LCIA Arbitration", abbr: "LCIA" },
+  { name: "ISO Certified", abbr: "ISO" },
+];
+
 export default function LawFirm() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -143,6 +152,25 @@ export default function LawFirm() {
               </div>
             </div>
             <div className="absolute -bottom-4 -right-4 w-full h-full border border-[#d4c9b0] -z-10" />
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="sans border-y border-[#d4c9b0] px-6 py-8 bg-[#f5f0e8]">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[9px] tracking-[0.3em] text-[#b8ad9a] uppercase font-medium text-center mb-6">
+            Recognised & Accredited By
+          </p>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+            {trustBadges.map(({ name, abbr }) => (
+              <div key={name} className="flex flex-col items-center gap-2 group cursor-default">
+                <div className="w-14 h-14 border border-[#d4c9b0] group-hover:border-[#8a6a3a] transition-colors duration-200 flex items-center justify-center">
+                  <span className="serif text-sm font-semibold text-[#8a7d6b] group-hover:text-[#8a6a3a] transition-colors duration-200">{abbr}</span>
+                </div>
+                <p className="text-[8px] tracking-wide text-[#b8ad9a] text-center leading-tight hidden md:block">{name}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
